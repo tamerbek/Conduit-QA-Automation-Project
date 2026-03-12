@@ -22,5 +22,9 @@ def ui_base_url():
     return "https://demo.realworld.show"
 
 @pytest.fixture
+def api_base_url():
+    return "https://api.realworld.show/api"
+
+@pytest.fixture
 def wait(browser):
     return WebDriverWait(browser, 10)

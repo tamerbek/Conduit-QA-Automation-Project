@@ -1,9 +1,13 @@
+import pytest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-#positive test for user login
-def test_login(browser, ui_base_url, wait):
+#  positive test for user login
+@pytest.mark.ui
+@pytest.mark.smoke
+@pytest.mark.regression
+def test_user_positive_login(browser, ui_base_url, wait):
     browser.get(ui_base_url + '/login')
 
     wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "[formcontrolname='email']"))).send_keys("conduit_test@test.com")

@@ -1,9 +1,13 @@
+import pytest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-#postitive test of user registration
-def test_registration(browser, ui_base_url, wait):
+#  postitive test for user registration
+@pytest.mark.ui
+@pytest.mark.smoke
+@pytest.mark.regression
+def test_user_positive_registration(browser, ui_base_url, wait):
     browser.get(ui_base_url + "/register")
 
     wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "[formcontrolname='username']"))).send_keys("conduit_test")
