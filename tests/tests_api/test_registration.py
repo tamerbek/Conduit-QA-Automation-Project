@@ -9,9 +9,9 @@ fake = Faker("ru_RU")
 @pytest.mark.regression
 def test_user_positive_registration_api(api_base_url):
     user_data = {
-        "email": fake.name(),
-        "password": fake.email(),
-        "username": fake.password()
+        "email": fake.email(),
+        "password": fake.password(),
+        "username": fake.name()
     }
     payload = {"user": user_data}
 
@@ -23,8 +23,47 @@ def test_user_positive_registration_api(api_base_url):
     assert response.json()["user"]["username"] == user_data["username"]
     assert response.json()["user"]["email"] == user_data["email"]
 
-    #  print(response.status_code)
-    #  print(response.json())
-    #  print(response.text)
-    #  print(response.headers)
-    #  print(response.url)
+
+@pytest.mark.api
+@pytest.mark.regression
+def test_user_registration_empty_password(api_base_url):
+    user_data = {
+        "email": fake.email(),
+        "username": fake.name(),
+    }
+    payload = {"user": user_data}
+
+    response = requests.post(api_base_url + "/users", json=payload)
+
+    assert response.status_code == 422
+    assert "can't be blank" in response.json()["errors"]["password"]
+
+
+@pytest.mark.api
+@pytest.mark.regression
+def test_user_registration_empty_username(api_base_url):
+    user_data = {
+        "email": fake.email(),
+        "password": fake.password(),
+    }
+    payload = {"user": user_data}
+
+    response = requests.post(api_base_url + "/users", json=payload)
+
+    assert response.status_code == 422
+    assert "can't be blank" in response.json()["errors"]["username"]
+
+
+@pytest.mark.api
+@pytest.mark.regression
+def test_user_registration_empty_email(api_base_url):
+    user_data = {
+        "password": fake.password(),
+        "username": fake.name()
+    }
+    payload = {"user": user_data}
+
+    response = requests.post(api_base_url + "/users", json=payload)
+
+    assert response.status_code == 422
+    assert "can't be blank" in response.json()["errors"]["email"]
