@@ -54,3 +54,5 @@ def test_user_registration_empty_username(browser, ui_base_url, wait):
     wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "[formcontrolname='password']"))).send_keys("conduit_test")
 
     assert not wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".btn-primary"))).is_enabled()
+
+@pytest.mark.
