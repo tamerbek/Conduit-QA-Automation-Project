@@ -27,7 +27,7 @@ def test_user_positive_registration_api(api_base_url):
 
 @pytest.mark.api
 @pytest.mark.regression
-def test_user_registration_empty_password(api_base_url):
+def test_user_negative_registration_empty_password(api_base_url):
     user_data = {
         "email": fake.email(),
         "username": fake.name(),
@@ -42,7 +42,7 @@ def test_user_registration_empty_password(api_base_url):
 
 @pytest.mark.api
 @pytest.mark.regression
-def test_user_registration_empty_username(api_base_url):
+def test_user_negative_registration_empty_username(api_base_url):
     user_data = {
         "email": fake.email(),
         "password": fake.password(),
@@ -57,7 +57,7 @@ def test_user_registration_empty_username(api_base_url):
 
 @pytest.mark.api
 @pytest.mark.regression
-def test_user_registration_empty_email(api_base_url):
+def test_user_negative_registration_empty_email(api_base_url):
     user_data = {
         "password": fake.password(),
         "username": fake.name()
@@ -72,7 +72,7 @@ def test_user_registration_empty_email(api_base_url):
 
 @pytest.mark.api
 @pytest.mark.regression
-def test_user_registration_all_fields_empty(api_base_url):
+def test_user_negative_registration_all_fields_empty(api_base_url):
     user_data = {
         "username": "",
         "email": "",
@@ -90,7 +90,7 @@ def test_user_registration_all_fields_empty(api_base_url):
 
 @pytest.mark.api
 @pytest.mark.regression
-def test_user_registration_empty_body(api_base_url):
+def test_user_negative_registration_empty_body(api_base_url):
     payload = {}
 
     response = requests.post(api_base_url + "/users", json=payload)
@@ -102,7 +102,7 @@ def test_user_registration_empty_body(api_base_url):
 
 @pytest.mark.api
 @pytest.mark.regression
-def test_user_registration_without_user_wrapper(api_base_url):
+def test_user_negative_registration_without_user_wrapper(api_base_url):
     user_data = {
         "email": fake.email(),
         "password": fake.password(),
@@ -119,7 +119,7 @@ def test_user_registration_without_user_wrapper(api_base_url):
 
 @pytest.mark.api
 @pytest.mark.regression
-def test_user_registration_email_100symbols(api_base_url):
+def test_user_negative_registration_email_100symbols(api_base_url):
     user_data = {
         "username": fake.name(),
         "email": "conduit_testconduit_testconduit_testconduit_testconduit_testconduit_testconduit_testconduit@test.com",
@@ -137,7 +137,7 @@ def test_user_registration_email_100symbols(api_base_url):
 
 @pytest.mark.api
 @pytest.mark.regression
-def test_user_registration_email_101symbol(api_base_url):
+def test_user_negative_registration_email_101symbol(api_base_url):
     user_data = {
         "username": fake.name(),
         "email": "conduit_testconduit_testconduit_testconduit_testconduit_testconduit_testconduit_testconduit1@test.com",
@@ -154,7 +154,7 @@ def test_user_registration_email_101symbol(api_base_url):
 
 @pytest.mark.api
 @pytest.mark.regression
-def test_user_registration_username_60symbols(api_base_url):
+def test_user_negative_registration_username_60symbols(api_base_url):
     user_data = {
         "username": "usernameusernameusernameusernameusernameusernameusernameuser",
         "email": fake.email(),
@@ -172,7 +172,7 @@ def test_user_registration_username_60symbols(api_base_url):
 
 @pytest.mark.api
 @pytest.mark.regression
-def test_user_registration_username_61symbol(api_base_url):
+def test_user_negative_registration_username_61symbol(api_base_url):
     user_data = {
         "username": "usernameusernameusernameusernameusernameusernameusernameuseru",
         "email": fake.email(),
@@ -189,7 +189,7 @@ def test_user_registration_username_61symbol(api_base_url):
 
 @pytest.mark.api
 @pytest.mark.regression
-def test_user_registration_password_60symbols(api_base_url):
+def test_user_negative_registration_password_60symbols(api_base_url):
     user_data = {
         "username": fake.name(),
         "email": fake.email(),
@@ -207,7 +207,7 @@ def test_user_registration_password_60symbols(api_base_url):
 
 @pytest.mark.api
 @pytest.mark.regression
-def test_user_registration_password_61symbol(api_base_url):
+def test_user_negative_registration_password_61symbol(api_base_url):
     user_data = {
         "username": fake.name(),
         "email": fake.email(),
