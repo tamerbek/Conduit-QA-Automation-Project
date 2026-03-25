@@ -45,10 +45,37 @@ def test_user_negative_login_empty_email(api_base_url):
 @pytest.mark.api
 @pytest.mark.regression
 def test_user_negative_login_empty_password(api_base_url):
-    user_data = {"email": fake.name(), "password": ""}
+    user_data = {"email": fake.email(), "password": ""}
     payload = {"user":user_data}
 
     response = requests.post(api_base_url + "/users/login", json = payload)
     assert response.status_code == 422
     assert "can't be blank" in response.json()["errors"]["password"]
+
+
+@pytest.mark.api
+@pytest.mark.regression
+def test_user_negative_login_empty_login_and_password(api_base_url):
+    user_data = {
+        "email": "",
+        "password": ""
+    }
+    payload = {"user": user_data}
+
+    response = requests.post(api_base_url + "/users/login", json=payload)
+
+    assert response.status_code == 422
+    assert "can't be blank" in response.json()["errors"]["email"]
+    assert "can't be blank" in response.json()["errors"]["password"]
+
+
+@pytest.mark.api
+@pytest.mark.regression
+def test_user_negative_login_without_body(api_base_url):
+    payload = ""
+
+    response = requests.post(api_base_url + "/users/login", json = payload)
+
+    assert response.status_code == 500
+    assert "Internal Server Error" in response.text
 
