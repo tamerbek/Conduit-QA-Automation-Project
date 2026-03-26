@@ -220,3 +220,20 @@ def test_user_negative_registration_password_61symbol(api_base_url):
     assert response.status_code == 422
     assert "Email, username and password are expected as strings of length less than 100, 60, and 60, respectively" in response.json()["errors"]["body"]
     print(response.text)
+
+
+@pytest.mark.api
+@pytest.mark.regression
+def test_user_registration_sql_injection_password(api_base_url):
+    user_data = {
+        "email": fake.email(),
+        "password": "' OR '1'='1",
+        "username": fake.name()
+    }
+
+    payload = {"user": user_data}
+
+    response = requests.post(api_base_url + "/users/login", json=payload)
+
+    assert response.status_code == 401
+    assert "invalid" in response.json()["errors"]["credentials"]

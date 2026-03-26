@@ -38,3 +38,4 @@
   - Без username
   - Без username и пароля
   - Пустой body
+  - Body без обёртки user

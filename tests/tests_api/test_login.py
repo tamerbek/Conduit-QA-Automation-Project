@@ -76,6 +76,33 @@ def test_user_negative_login_without_body(api_base_url):
 
     response = requests.post(api_base_url + "/users/login", json = payload)
 
-    assert response.status_code == 500
-    assert "Internal Server Error" in response.text
+    assert response.status_code == 422
+    assert "Invalid request body" in response.json()["errors"]["body"]
+
+
+@pytest.mark.api
+@pytest.mark.regression
+def test_user_negative_login_without_wrapper(api_base_url):
+    user_data = {"email": "conduit_test@test.com",
+                 "password": "conduit_test"}
+
+    response = requests.post(api_base_url + "/users/login", json=user_data)
+
+    assert response.status_code == 422
+    assert "can't be blank" in response.json()["errors"]["email"]
+    assert "can't be blank" in response.json()["errors"]["password"]
+
+
+@pytest.mark.api
+@pytest.mark.regression
+def test_user_login_sql_injection_password(api_base_url):
+    user_data = {"email": "conduit_test@test.com",
+                 "password": "' OR '1'='1"}
+
+    payload = {"user": user_data}
+
+    response = requests.post(api_base_url + "/users/login", json=payload)
+
+    assert response.status_code == 401
+    assert "invalid" in response.json()["errors"]["credentials"]
 
