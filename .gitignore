@@ -209,3 +209,4 @@ __marimo__/
 # allure
 
 /allure-results
+/tests/tests_ui/allure-results/

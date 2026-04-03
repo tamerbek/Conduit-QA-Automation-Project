@@ -1,6 +1,7 @@
 import pytest
 import requests
 from faker import Faker
+import allure
 
 fake = Faker("ru_RU")
 
@@ -9,8 +10,17 @@ fake = Faker("ru_RU")
 @pytest.mark.smoke
 @pytest.mark.regression
 def test_user_positive_login_api(api_base_url):
+    user_data = {
+        "email": "conduit_test@test.com",
+        "password": "conduit_test",
+        "username": "conduit_test"
+    }
+    payload = {"user": user_data}
+
+    response = requests.post(api_base_url + "/users", json=payload)
+
     user_data = {"email": "conduit_test@test.com", "password": "conduit_test"}
-    payload = {"user":user_data}
+    payload = {"user": user_data}
     response = requests.post(api_base_url + "/users/login", json = payload)
 
     assert response.status_code == 200

@@ -55,3 +55,16 @@ def test_user_registration_empty_username(browser, ui_base_url, wait):
 
     assert not wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".btn-primary"))).is_enabled()
 
+
+@pytest.mark.ui
+@pytest.mark.regression
+def test_user_registration_haveaccount_button(browser, ui_base_url, wait):
+    browser.get(ui_base_url + "/register")
+
+    login_link = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "p.text-xs-center a[href='/login']")))
+    assert login_link.is_displayed()
+
+    login_link.click()
+
+    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "[formcontrolname='email']")))
+    assert "/login" in browser.current_url
